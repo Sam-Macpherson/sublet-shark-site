@@ -11,10 +11,12 @@
 
 # misc
 .idea
+.vscode
 .DS_Store
 .env.development
 .env.production
 .eslintcache
+react-app-env.d.ts
 
 npm-debug.log*
 yarn-debug.log*
