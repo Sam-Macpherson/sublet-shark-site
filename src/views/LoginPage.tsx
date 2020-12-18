@@ -87,6 +87,7 @@ function LoginPage() {
                       <Autocomplete
                         options={institutions}
                         getOptionLabel={(institution: Institution) => institution.name}
+                        value={chosenInstitution}
                         onChange={(event: ChangeEvent<{}>, value: Institution | null) => {
                           setChosenInstitution(value);
                           setChosenDomain('');
