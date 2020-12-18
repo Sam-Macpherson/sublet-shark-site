@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    // width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -68,12 +68,12 @@ function LoginPage() {
       alignItems="center"
       style={{ minHeight: '100%' }}
     >
-      <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+      <Grid item xs={12} sm={12} md={6} lg={8}>
         <div className={classes.gridItem}>
           <About />
         </div>
       </Grid>
-      <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+      <Grid item xs={12} sm={12} md={6} lg={4}>
         <div className={classes.gridItem}>
           <Paper>
             <div className={classes.paper}>
