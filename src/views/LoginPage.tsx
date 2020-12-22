@@ -1,11 +1,16 @@
-// The login page.
+/**
+ * The Login/Register page.
+ */
 
-import { Avatar, Button, Grid, Link, makeStyles, Paper, TextField, Typography } from "@material-ui/core";
+import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography } from "@material-ui/core";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import About from "../components/About";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import axios from "axios";
 import { Autocomplete } from "@material-ui/lab";
+import { Link } from 'react-router-dom';
+import {Link as MUILink } from '@material-ui/core'
+
 
 const useStyles = makeStyles(theme => ({
   pageContainer: {
@@ -22,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "white",
   },
   form: {
     width: "100%",
@@ -39,9 +44,12 @@ interface Institution {
   address: string;
 }
 
-function LoginPage() {
+interface LoginPageProps {
+  registering: boolean;
+}
+
+function LoginPage(props: LoginPageProps) {
   const classes = useStyles();
-  const [registering, setRegistering] = useState(true);
   const [institutions, setInstitutions] = useState([]);
   const [chosenInstitution, setChosenInstitution] = useState<Institution | null>(null);
   const [chosenDomain, setChosenDomain] = useState<string | null>(null);
@@ -75,15 +83,15 @@ function LoginPage() {
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={4}>
         <div className={classes.gridItem}>
-          <Paper>
+          <Paper elevation={5}>
             <div className={classes.paper}>
               <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography variant="h5">{registering ? "Sign up" : "Log in"}</Typography>
+              <Typography variant="h5">{props.registering ? "Sign up" : "Log in"}</Typography>
               <form className={classes.form} noValidate>
                 <Grid container spacing={2} alignItems="center">
-                  {registering && <Grid item xs={12}>
+                  {props.registering && <Grid item xs={12}>
                       <Autocomplete
                         options={institutions}
                         getOptionLabel={(institution: Institution) => institution.name}
@@ -95,7 +103,7 @@ function LoginPage() {
                         renderInput={(params) => <TextField {...params} autoFocus label="Institution" variant="outlined" />}
                       />
                   </Grid>}
-                  {registering && <Grid item xs={12} sm={6}>
+                  {props.registering && <Grid item xs={12} sm={6}>
                     <TextField
                       autoComplete="fname"
                       name="firstName"
@@ -106,7 +114,7 @@ function LoginPage() {
                       label="First Name"
                     />
                   </Grid>}
-                  {registering && <Grid item xs={12} sm={6}>
+                  {props.registering && <Grid item xs={12} sm={6}>
                     <TextField
                       variant="outlined"
                       required
@@ -117,7 +125,7 @@ function LoginPage() {
                       autoComplete="lname"
                     />
                   </Grid>}
-                  <Grid item xs={registering ? 5 : 12}>
+                  <Grid item xs={props.registering ? 5 : 12}>
                     <TextField
                       variant="outlined"
                       required
@@ -128,10 +136,10 @@ function LoginPage() {
                       autoComplete="email"
                     />
                   </Grid>
-                  {registering && <Grid item xs={1}>
-                    <Typography align="center" variant="h5">@</Typography>
+                  {props.registering && <Grid item xs={1}>
+                    <Typography align="center" variant="h6">@</Typography>
                   </Grid>}
-                  {registering && <Grid item xs={6}>
+                  {props.registering && <Grid item xs={6}>
                     <Autocomplete
                       options={chosenInstitution ? chosenInstitution.domains : []}
                       getOptionLabel={(domain: string) => domain}
@@ -162,13 +170,13 @@ function LoginPage() {
                   color="primary"
                   className={classes.submit}
                 >
-                  {registering ? "Sign up" : "Log in"}
+                  {props.registering ? "Sign up" : "Log in"}
                 </Button>
                 <Grid container justify="flex-end">
                   <Grid item>
-                    <Link href="#" variant="body2" onClick={() => {setRegistering(!registering)}}>
-                      {registering ? "Already have an account? Log in" : "Don't have an account? Sign up"}
-                    </Link>
+                    <MUILink variant="body2" component={Link} to={props.registering ? "/login" : "/register"}>
+                      {props.registering ? "Already have an account? Log in" : "Don't have an account? Sign up"}
+                    </MUILink>
                   </Grid>
                 </Grid>
               </form>

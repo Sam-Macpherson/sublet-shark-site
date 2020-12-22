@@ -1,3 +1,5 @@
-// The homepage.
+/**
+ * The website homepage.
+ */
 
 export {}
