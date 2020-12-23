@@ -44,8 +44,8 @@ function LoginForm() {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControl variant="outlined" fullWidth required>
-                <InputLabel>Password</InputLabel>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel required htmlFor="password">Password</InputLabel>
                 <OutlinedInput
                   required
                   name="password"
