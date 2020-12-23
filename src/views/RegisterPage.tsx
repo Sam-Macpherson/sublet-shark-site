@@ -3,8 +3,9 @@
  */
 
 import { Grid, makeStyles } from "@material-ui/core";
+import React from "react";
 import About from "../components/About";
-import LoginForm from "../components/Form/LoginForm";
+import RegisterForm from "../components/Form/RegisterForm";
 
 
 const useStyles = makeStyles(theme => ({
@@ -13,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function LoginPage() {
+function RegisterPage() {
   const classes = useStyles();
 
   return (
@@ -29,11 +30,11 @@ function LoginPage() {
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={4}>
         <div className={classes.gridItem}>
-          <LoginForm />
+          <RegisterForm />
         </div>
       </Grid>
     </Grid>
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

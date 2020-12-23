@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import React from "react";
 import LoginPage from "./views/LoginPage";
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import RegisterPage from "./views/RegisterPage";
 
 
 const useStyles = makeStyles({
@@ -21,8 +22,8 @@ function App() {
           <Route path="/" exact>
             <Redirect to="/register" />
           </Route>
-          <Route path="/login" render={() => <LoginPage registering={false} />}/>
-          <Route path="/register" render={() => <LoginPage registering />}/>    
+          <Route path="/login" render={() => <LoginPage />}/>
+          <Route path="/register" render={() => <RegisterPage />}/>    
         </Switch>
       </div>
     </Router>
