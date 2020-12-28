@@ -1,5 +1,5 @@
 /**
- * The component that holds the summary of what Sublet Shark is.
+ * The component that holds the summary of what Sublet Shark is and is not.
  */
 
 import React from "react"
@@ -11,7 +11,8 @@ import AboutBulletPoint from "./AboutBulletPoint";
 
 
 const useStyles = makeStyles(theme => ({
-  header: {
+  listHeader: {
+    color: theme.palette.primary.dark,
     margin: theme.spacing(2, 0, 0, 2),
   },
   text: {
@@ -24,14 +25,17 @@ function About() {
 
   return (
     <div>
-      <Grid container spacing={4} direction="column">
+      <Grid container alignItems="center" spacing={4} direction="column">
         <Grid item>
           <Typography className={classes.text} variant="h3">🦈 Sublet Shark</Typography>
         </Grid>
         <Grid item>
+          <Typography className={classes.text} variant="h5">Sublets for students</Typography> 
+        </Grid>
+        <Grid item>
           <Grid container direction="row" alignItems="flex-start">
             <Grid item xs={12} sm={6}>
-              <Typography variant="h6" className={classes.header}>
+              <Typography variant="h6" className={classes.listHeader}>
                 Sublet Shark <strong>is</strong>:
               </Typography>
                 <List>
@@ -46,7 +50,7 @@ function About() {
                 </List>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography variant="h6" className={classes.header}>
+              <Typography variant="h6" className={classes.listHeader}>
                 Sublet Shark <strong>is not</strong>:
               </Typography>
                 <List>

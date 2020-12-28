@@ -79,7 +79,7 @@ function LoginForm() {
           </Button>
           <Grid container justify="space-between" direction="row">
             <Grid item>
-              <MUILink variant="body2" component={Link} to="/register">
+              <MUILink variant="body2" component={Link} to="/recover-account">
                 Forgot password?
               </MUILink>
             </Grid>
