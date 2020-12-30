@@ -1,10 +1,22 @@
-import { Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, makeStyles, OutlinedInput, Paper, TextField, Typography } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Link as MUILink } from '@material-ui/core'
+import { 
+  Grid, 
+  Paper, 
+  Button, 
+  TextField, 
+  IconButton, 
+  InputLabel, 
+  makeStyles, 
+  Typography,
+  FormControl, 
+  OutlinedInput, 
+  InputAdornment,
+  Link as MUILink,
+} from "@material-ui/core";
+import { Autocomplete } from "@material-ui/lab";
 import { Link } from 'react-router-dom';
 import axios from "axios";
-import LockText from "../LockText";
+import { LockText } from '../lock-text';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 
@@ -24,11 +36,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
 interface Institution {
   domains: Array<string>;
   name: string;
   address: string;
 }
+
 
 function RegisterForm() {
   const classes = useStyles();
@@ -160,9 +174,9 @@ function RegisterForm() {
             </Grid>
           </Grid>
         </form>
-          </div>
-        </Paper>
-      );
-    }
+      </div>
+    </Paper>
+  );
+}
 
-    export default RegisterForm;
+export default RegisterForm;

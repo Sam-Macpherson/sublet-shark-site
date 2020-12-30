@@ -2,6 +2,7 @@ import { Avatar, ListItem, ListItemIcon, ListItemText, makeStyles, Typography } 
 import { CheckCircleOutline, HighlightOff } from "@material-ui/icons";
 import React from "react";
 
+
 const useStyles = makeStyles(theme => ({
   avatar: {
     margin: theme.spacing(1),
@@ -13,12 +14,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-interface AboutBulletPointProps {
+
+interface BulletPointProps {
   checkMark?: boolean;
   text: string;
 }
 
-function AboutBulletPoint(props: AboutBulletPointProps) {
+
+function BulletPoint(props: BulletPointProps) {
   const classes = useStyles();
 
   return (
@@ -35,4 +38,4 @@ function AboutBulletPoint(props: AboutBulletPointProps) {
   );
 }
 
-export default AboutBulletPoint;
+export default BulletPoint;

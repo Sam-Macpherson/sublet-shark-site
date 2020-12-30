@@ -1,9 +1,6 @@
-import { makeStyles } from "@material-ui/core";
-import React from "react";
-import LoginPage from "./views/LoginPage";
+import { makeStyles } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import RegisterPage from "./views/RegisterPage";
-import RecoverPasswordPage from "./views/RecoverPasswordPage";
+import { LoginPage, RegisterPage, RecoverPasswordPage } from '../../views';
 
 
 const useStyles = makeStyles({
@@ -12,6 +9,7 @@ const useStyles = makeStyles({
     display: "flex",
   },
 });
+
 
 function App() {
   const classes = useStyles();

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import App from './App';
-import { themeOptions } from './ThemeOptions';
+import { App } from './components/app';
+import { themeOptions } from './theme-options';
 
 const theme = createMuiTheme(themeOptions);
 
@@ -14,4 +14,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-

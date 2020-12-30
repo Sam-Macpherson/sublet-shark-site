@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { Button, Grid, makeStyles, Paper, TextField, Typography } from "@material-ui/core";
-import { Link as MUILink } from '@material-ui/core'
+import { 
+  Grid, 
+  Paper, 
+  Button, 
+  TextField, 
+  makeStyles, 
+  Typography,
+  Link as MUILink
+} from "@material-ui/core";
 import { Link } from 'react-router-dom';
-import LockText from "../LockText";
+import { LockText } from '../lock-text';
+
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -19,6 +27,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
   },
 }));
+
 
 function RecoverPasswordForm() {
   const classes = useStyles();

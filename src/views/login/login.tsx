@@ -3,8 +3,7 @@
  */
 
 import { Grid, makeStyles } from "@material-ui/core";
-import About from "../components/About";
-import LoginForm from "../components/Form/LoginForm";
+import { About, LoginForm } from '../../components';
 
 
 const useStyles = makeStyles(theme => ({
@@ -12,6 +11,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
   },
 }));
+
 
 function LoginPage() {
   const classes = useStyles();

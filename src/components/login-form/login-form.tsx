@@ -1,9 +1,21 @@
 import React, { useState } from "react";
-import { Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, makeStyles, OutlinedInput, Paper, TextField } from "@material-ui/core";
-import { Link as MUILink } from '@material-ui/core'
-import { Link } from 'react-router-dom';
-import LockText from "../LockText";
+import { 
+  Grid, 
+  Paper, 
+  Button, 
+  TextField,
+  IconButton, 
+  InputLabel, 
+  makeStyles,
+  FormControl, 
+  OutlinedInput, 
+  InputAdornment,
+  Link as MUILink,
+} from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { Link } from 'react-router-dom';
+import { LockText } from '../lock-text';
+
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -20,6 +32,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
   },
 }));
+
 
 function LoginForm() {
   const classes = useStyles();

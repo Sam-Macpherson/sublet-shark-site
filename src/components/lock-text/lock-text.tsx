@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
 interface LockTextProps {
   text: string;
 }

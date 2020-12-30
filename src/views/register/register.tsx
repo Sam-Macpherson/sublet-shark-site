@@ -1,10 +1,10 @@
 /**
- * The Recover Password page.
+ * The Login page.
  */
 
 import { Grid, makeStyles } from "@material-ui/core";
-import About from "../components/About";
-import RecoverPasswordForm from "../components/Form/RecoverPasswordForm";
+import React from "react";
+import { About, RegisterForm } from '../../components';
 
 
 const useStyles = makeStyles(theme => ({
@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function RecoverPasswordPage() {
+function RegisterPage() {
   const classes = useStyles();
 
   return (
@@ -29,11 +29,11 @@ function RecoverPasswordPage() {
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={4}>
         <div className={classes.gridItem}>
-          <RecoverPasswordForm />
+          <RegisterForm />
         </div>
       </Grid>
     </Grid>
   );
 }
 
-export default RecoverPasswordPage;
+export default RegisterPage;
