@@ -1,5 +1,0 @@
-/**
- * The website homepage.
- */
-
-export {}

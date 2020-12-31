@@ -1,3 +1,3 @@
-export { LoginPage } from './login';
-export { RegisterPage } from './register';
-export { RecoverPasswordPage } from './recover-password';
+export { default as LoginPage } from "./login";
+export { default as RegisterPage } from "./register";
+export { default as RecoverPasswordPage } from "./recover-password";
