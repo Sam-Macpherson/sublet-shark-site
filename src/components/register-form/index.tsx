@@ -3,18 +3,20 @@
  */
 
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { 
-  Grid, 
-  Paper, 
-  Button, 
-  TextField, 
-  IconButton, 
-  InputLabel, 
+import {
+  Grid,
+  Paper,
+  Button,
+  Checkbox,
+  TextField,
+  IconButton,
+  InputLabel,
   Typography,
-  FormControl, 
-  OutlinedInput, 
+  FormControl,
+  OutlinedInput,
   InputAdornment,
   Link as MUILink,
+  FormControlLabel,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { Link } from 'react-router-dom';
@@ -34,6 +36,7 @@ interface Institution {
 function RegisterForm() {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
+  const [allowAdditionalEmails, setAllowAdditionalEmails] = useState(true);
   const [institutions, setInstitutions] = useState([]);
   const [chosenInstitution, setChosenInstitution] = useState<Institution | null>(null);
   const [chosenDomain, setChosenDomain] = useState<string | null>(null);
@@ -53,7 +56,7 @@ function RegisterForm() {
       console.log(errors);
     })
   }, []);
-  
+
   return (
     <Paper elevation={5}>
       <div className={classes.paper}>
@@ -142,6 +145,17 @@ function RegisterForm() {
                   }
                 />
               </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                  control={
+                    <Checkbox
+                        checked={allowAdditionalEmails}
+                        onChange={() => setAllowAdditionalEmails(!allowAdditionalEmails)}
+                        color="primary" />
+                  }
+                  label="I want to receive updates and promotions via email."
+              />
             </Grid>
           </Grid>
           <Button
