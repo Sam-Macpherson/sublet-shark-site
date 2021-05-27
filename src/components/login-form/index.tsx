@@ -15,14 +15,53 @@ import {
   Link as MUILink,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useStyles } from "./style";
 import LockText from "../lock-text";
+import api from "../../global/axios.config";
+
+interface FormData {
+  email: string;
+  password: string;
+}
 
 
 function LoginForm() {
   const classes = useStyles();
+  const history = useHistory();
+  const initialFormData : FormData = Object.freeze({
+    email: "",
+    password: "",
+  });
+  const [formData, updateFormData] = useState(initialFormData);
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (event: any) => {
+    updateFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+
+    api.post(
+      "/users/login/",
+      {
+        username: formData.email,
+        password: formData.password,
+      }
+    ).then(loginResponse => {
+      localStorage.setItem("access_token", loginResponse.data.access);
+      localStorage.setItem("refresh_token", loginResponse.data.refresh);
+      api.defaults.headers["Authorization"] =
+        `Bearer ${localStorage.getItem("access_token")}`;
+      history.push("/listings");
+    }).catch(errors => {
+      console.log(errors);
+    });
+  };
   
   return(
     <Paper elevation={5}>
@@ -37,6 +76,8 @@ function LoginForm() {
                 fullWidth
                 autoFocus
                 id="email"
+                value={formData.email}
+                onChange={handleChange}
                 label="Email Address"
                 name="email"
                 autoComplete="email"
@@ -47,6 +88,8 @@ function LoginForm() {
                 <InputLabel required htmlFor="password">Password</InputLabel>
                 <OutlinedInput
                   required
+                  value={formData.password}
+                  onChange={handleChange}
                   name="password"
                   id="password"
                   label="Password *"
@@ -73,6 +116,7 @@ function LoginForm() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Log in
           </Button>

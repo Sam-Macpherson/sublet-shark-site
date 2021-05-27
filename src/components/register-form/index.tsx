@@ -2,7 +2,7 @@
  * The form component for registering an account.
  */
 
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Paper,
@@ -19,11 +19,12 @@ import {
   FormControlLabel,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import axios from "axios";
 import LockText from "../lock-text";
 import { useStyles } from "./style";
+import api from "../../global/axios.config";
 
 
 interface Institution {
@@ -32,23 +33,54 @@ interface Institution {
   address: string;
 }
 
+interface FormData {
+  institution: Institution | null;
+  domain: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  allowAdditionalEmails: boolean;
+}
 
 function RegisterForm() {
   const classes = useStyles();
-  const [showPassword, setShowPassword] = useState(false);
-  const [allowAdditionalEmails, setAllowAdditionalEmails] = useState(true);
+  const history = useHistory();
+  const initialFormData : FormData = Object.freeze({
+    institution: null,
+    domain: "",
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    allowAdditionalEmails: true,
+  });
+
   const [institutions, setInstitutions] = useState([]);
-  const [chosenInstitution, setChosenInstitution] = useState<Institution | null>(null);
-  const [chosenDomain, setChosenDomain] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, updateFormData] = useState(initialFormData);
+
+  const handleChange = (event: any) => {
+    updateFormData({
+      ...formData,
+      [event.target.name]: "value" in event.target ? event.target.value : event.target.checked,
+    });
+  }
+
+  const handleChangeSelect = (event: any, value: Institution | string | null, key: string) => {
+    updateFormData({
+      ...formData,
+      [key]: value,
+    })
+  }
 
   useEffect(() => {
     axios.get(
       '/institutions/institutions/', 
       {
         headers: {
-          'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
-        } 
+        }
       }
     ).then(response => {
       setInstitutions(response.data);
@@ -56,6 +88,36 @@ function RegisterForm() {
       console.log(errors);
     })
   }, []);
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+
+    api.post(
+      '/users/register/',
+      {
+        email: formData.email + "@" + formData.domain,
+        password: formData.password,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+      }
+  ).then(response => {
+      api.post(
+        '/users/login/',
+        {
+          username: formData.email + "@" + formData.domain,
+          password: formData.password
+        }
+      ).then(loginResponse => {
+        localStorage.setItem("access_token", loginResponse.data.access);
+        localStorage.setItem("refresh_token", loginResponse.data.refresh);
+        api.defaults.headers["Authorization"] =
+          `Bearer ${localStorage.getItem("access_token")}`;
+        history.push("/listings");
+      })
+    }).catch(errors => {
+      console.log(errors);
+    })
+  }
 
   return (
     <Paper elevation={5}>
@@ -67,21 +129,19 @@ function RegisterForm() {
                 <Autocomplete
                   options={institutions}
                   getOptionLabel={(institution: Institution) => institution.name}
-                  value={chosenInstitution}
-                  onChange={(event: ChangeEvent<{}>, value: Institution | null) => {
-                    setChosenInstitution(value);
-                    setChosenDomain('');
-                  }}
+                  value={formData.institution}
+                  onChange={(event, value) => handleChangeSelect(event, value, "institution")}
                   renderInput={(params) => <TextField {...params} autoFocus required label="Institution" variant="outlined" />}
                 />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
                 variant="outlined"
                 required
                 fullWidth
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
                 id="firstName"
                 label="First Name"
               />
@@ -91,10 +151,11 @@ function RegisterForm() {
                 variant="outlined"
                 required
                 fullWidth
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
                 id="lastName"
                 label="Last Name"
-                name="lastName"
-                autoComplete="lname"
               />
             </Grid>
             <Grid item xs={5}>
@@ -102,10 +163,11 @@ function RegisterForm() {
                 variant="outlined"
                 required
                 fullWidth
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 id="email"
                 label="Email Address"
-                name="email"
-                autoComplete="email"
               />
             </Grid>
             <Grid item xs={1}>
@@ -113,13 +175,18 @@ function RegisterForm() {
             </Grid>
             <Grid item xs={6}>
               <Autocomplete
-                options={chosenInstitution ? chosenInstitution.domains : []}
+                options={formData.institution ? formData.institution?.domains : []}
                 getOptionLabel={(domain: string) => domain}
-                value={chosenDomain}
-                onChange={(event: ChangeEvent<{}>, value: string | null) => {
-                  setChosenDomain(value);
-                }}
-                renderInput={(params) => <TextField {...params} variant="outlined" />}
+                noOptionsText="Select an institution to see available domains."
+                value={formData.domain}
+                onChange={(event, value) => handleChangeSelect(event, value, "domain")}
+                renderInput={(params) =>
+                  <TextField
+                    {...params}
+                    required
+                    label="Domain"
+                    variant="outlined"
+                  />}
               />
             </Grid>
             <Grid item xs={12}>
@@ -127,10 +194,12 @@ function RegisterForm() {
                 <InputLabel>Password</InputLabel>
                 <OutlinedInput
                   required
-                  name="password"
                   id="password"
                   label="Password *"
                   type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -150,11 +219,12 @@ function RegisterForm() {
               <FormControlLabel
                   control={
                     <Checkbox
-                        checked={allowAdditionalEmails}
-                        onChange={() => setAllowAdditionalEmails(!allowAdditionalEmails)}
+                        checked={formData.allowAdditionalEmails}
+                        onChange={handleChange}
+                        name="allowAdditionalEmails"
                         color="primary" />
                   }
-                  label="I want to receive updates and promotions via email."
+                  label="I want to receive email updates and promotions."
               />
             </Grid>
           </Grid>
@@ -164,6 +234,7 @@ function RegisterForm() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Sign up
           </Button>
