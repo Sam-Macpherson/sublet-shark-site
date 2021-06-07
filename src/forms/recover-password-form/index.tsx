@@ -19,7 +19,7 @@ import { useStyles } from "./style";
 
 const RecoverPasswordForm = () => {
   const classes = useStyles();
-  const [emailSent, setEmailSent] = useState(false);
+  const [emailSent, setEmailSent] = useState<boolean>(false);
   
   return(
     <Paper elevation={5}>

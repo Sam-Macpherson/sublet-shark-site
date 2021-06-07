@@ -1,6 +1,7 @@
 
-/* For future reference on importing types:
-// / <reference path="src/forms/login-form/types.d.ts" /> */
+/* For future reference on how to import types (remove spaces between / / /):
+/ / / <reference path="src/forms/login-form/types.d.ts" />
+*/
 
 /**
  * Institutions.

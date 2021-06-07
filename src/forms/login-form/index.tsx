@@ -34,8 +34,8 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  const [formData, updateFormData] = useState(initialFormData);
-  const [showPassword, setShowPassword] = useState(false);
+  const [formData, updateFormData] = useState<LoginFormData>(initialFormData);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleChange = (event: any) => {
     updateFormData({

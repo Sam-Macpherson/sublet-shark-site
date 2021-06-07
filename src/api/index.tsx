@@ -32,6 +32,7 @@ const logout = () =>
     axiosAPI.defaults.headers["Authorization"] = null;
   }).catch(error => {
     console.log("Error logging out: ", error);
+    return Promise.reject(error);
   });
 
 const register = (params: Object) =>
@@ -41,6 +42,7 @@ const register = (params: Object) =>
     // Do nothing?
   }).catch(error => {
     console.log("Error registering: ", error);
+    return Promise.reject(error);
   });
 
 const recoverPassword = (params: Object) => null; // TODO
@@ -56,7 +58,10 @@ const INSTITUTIONS_API_URLS = {
 const fetchInstitutions = () =>
   axiosAPI.get<Institution[]>(INSTITUTIONS_API_URLS.FETCH_ALL).then(
   response => Promise.resolve(response.data)
-  ).catch(error => Promise.reject(error));
+  ).catch(error => {
+    console.log("Error fetching institutions: ", error);
+    return Promise.reject(error)
+  });
 
 /**
  * Listings.
@@ -68,7 +73,10 @@ const LISTINGS_API_URLS = {
 const fetchListings = () =>
   axiosAPI.get<Listing[]>(LISTINGS_API_URLS.FETCH_ALL).then(
     response => Promise.resolve(response.data)
-  ).catch(error => Promise.reject(error));
+  ).catch(error => {
+    console.log("Error fetching listings: ", error);
+    return Promise.reject(error)
+  });
 
 
 /**
