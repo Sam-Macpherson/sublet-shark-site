@@ -17,7 +17,7 @@ import LockText from 'fields/lock-text-field';
 import { useStyles } from "./style";
 
 
-function RecoverPasswordForm() {
+const RecoverPasswordForm = () => {
   const classes = useStyles();
   const [emailSent, setEmailSent] = useState(false);
   
@@ -63,7 +63,7 @@ function RecoverPasswordForm() {
       </div>
     </Paper>
   );
-}
+};
 
 
 export default RecoverPasswordForm;

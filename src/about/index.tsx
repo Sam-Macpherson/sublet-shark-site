@@ -9,7 +9,7 @@ import BulletPoint from "fields/bullet-point-field";
 
 import { useStyles } from "./style";
 
-function About() {
+const About = () => {
   const classes = useStyles();
 
   return (
@@ -53,6 +53,6 @@ function About() {
       </Grid>
     </div>
   )
-}
+};
 
 export default About;

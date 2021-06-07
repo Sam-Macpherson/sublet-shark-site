@@ -14,7 +14,7 @@ interface LockTextProps {
 }
 
 
-function LockText(props: LockTextProps) {
+const LockText = ({ text }: LockTextProps) => {
   const classes = useStyles();
 
   return (
@@ -22,9 +22,9 @@ function LockText(props: LockTextProps) {
       <Avatar className={classes.avatar}>
         <LockOutlinedIcon />
       </Avatar>
-      <Typography variant="h5">{props.text}</Typography>
+      <Typography variant="h5">{text}</Typography>
     </Grid>      
   );
-}
+};
 
 export default LockText;

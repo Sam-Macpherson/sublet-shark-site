@@ -17,21 +17,20 @@ import {
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Link, useHistory } from 'react-router-dom';
 import LockText from "fields/lock-text-field";
-import api from "global/axios.config";
+import API from "api";
 
 import { useStyles } from "./style";
 
-
-interface FormData {
+interface LoginFormData {
   email: string;
   password: string;
 }
 
 
-function LoginForm() {
+const LoginForm = () => {
   const classes = useStyles();
   const history = useHistory();
-  const initialFormData : FormData = Object.freeze({
+  const initialFormData: LoginFormData = Object.freeze({
     email: "",
     password: "",
   });
@@ -47,22 +46,10 @@ function LoginForm() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-
-    api.post(
-      "/users/login/",
-      {
-        username: formData.email,
-        password: formData.password,
-      }
-    ).then(loginResponse => {
-      localStorage.setItem("access_token", loginResponse.data.access);
-      localStorage.setItem("refresh_token", loginResponse.data.refresh);
-      api.defaults.headers["Authorization"] =
-        `Bearer ${localStorage.getItem("access_token")}`;
-      history.push("/listings");
-    }).catch(errors => {
-      console.log(errors);
-    });
+    API.login({
+      username: formData.email,
+      password: formData.password,
+    }).then(() => history.push("/listings"));
   };
   
   return(

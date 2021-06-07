@@ -1,27 +1,13 @@
 import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
 import {useStyles} from "./style";
 
-interface ListingImage {
-  image_url: string
-}
-
-interface Listing {
-  accommodation_type: number,
-  additional_info: string,
-  address: string,
-  start_date: string,
-  end_date: string,
-  images: ListingImage[],
-}
-
 interface ListingCardProps {
   listing: Listing,
 }
 
 
-function ListingCard(props: ListingCardProps) {
+const ListingCard = ({ listing }: ListingCardProps) => {
   const classes = useStyles();
-  const listing = props.listing;
 
   return (
     <Card className={classes.card} >
@@ -49,7 +35,7 @@ function ListingCard(props: ListingCardProps) {
       </Grid>
     </Card>
   );
-}
+};
 
 
 export default ListingCard;

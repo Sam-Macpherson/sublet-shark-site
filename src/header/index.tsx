@@ -22,7 +22,7 @@ import { useHistory } from "react-router-dom";
 import { useStyles } from "./style";
 
 
-function Header() {
+const Header = () => {
   const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -80,7 +80,7 @@ function Header() {
       </Toolbar>
     </AppBar>
   );
-}
+};
 
 
 export default Header;

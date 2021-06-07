@@ -15,20 +15,20 @@ interface BulletPointProps {
 }
 
 
-function BulletPoint(props: BulletPointProps) {
+const BulletPoint = ({ checkMark, text }: BulletPointProps) => {
   const classes = useStyles();
 
   return (
     <ListItem>
       <ListItemIcon>
       <Avatar className={classes.avatar}>
-        {props.checkMark ? <CheckCircleOutline /> : <HighlightOff />}
+        {checkMark ? <CheckCircleOutline /> : <HighlightOff />}
       </Avatar>
       </ListItemIcon>
-      <ListItemText classes={{primary: classes.text}} primary={props.text}/>
+      <ListItemText classes={{primary: classes.text}} primary={text}/>
     </ListItem>
   );
-}
+};
 
 
 export default BulletPoint;

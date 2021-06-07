@@ -22,18 +22,12 @@ import { Autocomplete } from "@material-ui/lab";
 import { Link, useHistory } from 'react-router-dom';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import LockText from "fields/lock-text-field";
-import api from "global/axios.config";
+import API from "api";
 
 import { useStyles } from "./style";
 
 
-interface Institution {
-  domains: Array<string>;
-  name: string;
-  address: string;
-}
-
-interface FormData {
+interface RegisterFormData {
   institution: Institution | null;
   domain: string;
   email: string;
@@ -43,10 +37,10 @@ interface FormData {
   allowAdditionalEmails: boolean;
 }
 
-function RegisterForm() {
+const RegisterForm = () => {
   const classes = useStyles();
   const history = useHistory();
-  const initialFormData : FormData = Object.freeze({
+  const initialFormData: RegisterFormData = Object.freeze({
     institution: null,
     domain: "",
     email: "",
@@ -56,9 +50,9 @@ function RegisterForm() {
     allowAdditionalEmails: true,
   });
 
-  const [institutions, setInstitutions] = useState([]);
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, updateFormData] = useState(initialFormData);
+  const [institutions, setInstitutions] = useState<Institution[]>([]);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [formData, updateFormData] = useState<RegisterFormData>(initialFormData);
 
   const handleChange = (event: any) => {
     updateFormData({
@@ -75,43 +69,24 @@ function RegisterForm() {
   }
 
   useEffect(() => {
-    api.get(
-      '/institutions/institutions/'
-    ).then(response => {
-      setInstitutions(response.data);
-    }).catch(errors => {
-      console.log(errors);
+    API.fetchInstitutions().then((institutions: Institution[]) => {
+      setInstitutions(institutions);
     })
   }, []);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-
-    api.post(
-      '/users/register/',
-      {
-        email: formData.email + "@" + formData.domain,
-        password: formData.password,
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-      }
-  ).then(response => {
-      api.post(
-        '/users/login/',
-        {
-          username: formData.email + "@" + formData.domain,
-          password: formData.password
-        }
-      ).then(loginResponse => {
-        localStorage.setItem("access_token", loginResponse.data.access);
-        localStorage.setItem("refresh_token", loginResponse.data.refresh);
-        api.defaults.headers["Authorization"] =
-          `Bearer ${localStorage.getItem("access_token")}`;
-        history.push("/listings");
-      })
-    }).catch(errors => {
-      console.log(errors);
-    })
+    API.register({
+      email: formData.email + "@" + formData.domain,
+      password: formData.password,
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+    }).then(() => {
+      API.login({
+        username: formData.email + "@" + formData.domain,
+        password: formData.password
+      }).then(() => history.push("/listings"));
+    });
   }
 
   return (
@@ -244,6 +219,6 @@ function RegisterForm() {
       </div>
     </Paper>
   );
-}
+};
 
 export default RegisterForm;

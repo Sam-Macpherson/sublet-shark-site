@@ -6,24 +6,20 @@ import ListingCard from "listings/components/listing-card";
 import { Grid, Typography } from "@material-ui/core";
 import {useEffect, useState} from "react";
 import React from 'react';
-import api from "global/axios.config";
+import API from "api";
 
 import { useStyles } from "./style";
 
 
-function ListingsPage() {
+const ListingsPage = () => {
   const classes = useStyles();
-  const [isLoading, setIsLoading] = useState(true)
-  const [listings, setListings] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [listings, setListings] = useState<Listing[]>([]);
 
   useEffect(() => {
-    api.get(
-      '/listings/listings/'
-    ).then(response => {
+    API.fetchListings().then((listings: Listing[]) => {
       setIsLoading(false);
-      setListings(response.data);
-    }).catch(errors => {
-      console.log(errors);
+      setListings(listings);
     })
   }, []);
 

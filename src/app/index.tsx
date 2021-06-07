@@ -6,7 +6,7 @@ import SubletSharkRoutes from "routes/SubletSharkRoutes";
 
 import { useStyles } from './style';
 
-function App() {
+const App = () => {
   const classes = useStyles();
   
   return (
@@ -16,7 +16,7 @@ function App() {
       </BrowserRouter>
     </div>
   );
-}
+};
 
 
 export default App;

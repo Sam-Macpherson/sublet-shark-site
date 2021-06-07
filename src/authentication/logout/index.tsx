@@ -3,29 +3,23 @@
  */
 
 import { useEffect } from "react";
-import api from "global/axios.config";
 import { useHistory } from "react-router-dom";
+import { Typography } from "@material-ui/core";
+
+import API  from "api";
 
 
 const Logout = () =>  {
   const history = useHistory();
 
   useEffect(() => {
-    api.post("/users/logout/", {
-      refresh_token: localStorage.getItem("refresh_token"),
-    }).then(response => {
-      console.log(response);
-    }).catch(error => {
-      console.log("Error logging out: ", error);
-    });
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    api.defaults.headers["Authorization"] = null;
-    history.push("/auth/login");
+    API.logout().then(() => {
+      history.push("/auth/login");
+    })
   });
 
   return (
-    <div>Logging out...</div>
+    <Typography variant="body1">Logging out...</Typography>
   );
 }
 
