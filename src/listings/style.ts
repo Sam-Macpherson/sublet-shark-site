@@ -2,14 +2,12 @@ import { makeStyles } from "@material-ui/core/styles";
 
 
 const useStyles = makeStyles((theme) => ({
-  fullWidth: {
-    width: "100%",
-  },
   listingsContainerGrid: {
     width: "100%",
     padding: theme.spacing(4),
   },
   background: {
+    width: "100%",
     background: theme.palette.primary.light,
   },
   drawer: {

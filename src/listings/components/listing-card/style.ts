@@ -2,15 +2,19 @@ import {makeStyles} from "@material-ui/core/styles";
 
 
 const useStyles = makeStyles((theme) => ({
-  media: {
-    width: 200,
-    height: 200,
-  },
   card: {
-    margin: theme.spacing(1),
+    height: '100%',
+    width: '100%',
     display: 'flex',
+    flexDirection: 'column',
     background: 'white',
     color: theme.palette.primary.dark,
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
   },
 }));
 

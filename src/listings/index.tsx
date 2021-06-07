@@ -7,6 +7,7 @@ import { Grid, Typography } from "@material-ui/core";
 import {useEffect, useState} from "react";
 import React from 'react';
 import API from "api";
+import _ from "lodash";
 
 import { useStyles } from "./style";
 
@@ -24,13 +25,13 @@ const ListingsPage = () => {
   }, []);
 
   return (
-    <div className={classes.fullWidth}>
+    <div className={classes.background}>
       {isLoading ? (<Typography variant="body1">Loading...</Typography>) : (
         <React.Fragment>
           <Header />
-          <Grid container direction="column" justify="flex-start" className={classes.listingsContainerGrid}>
-            {listings.map(listing => (
-              <Grid item xs={12}>
+          <Grid container spacing={4} className={classes.listingsContainerGrid}>
+            {_.map(listings, listing => (
+              <Grid item xs={12} sm={6} md={4} lg={3}>
                 <ListingCard listing={listing}/>
               </Grid>
             ))}
