@@ -1,13 +1,17 @@
-import {useEffect} from "react";
-import api from "../../global/axios.config";
-import {useHistory} from "react-router-dom";
+/**
+ * Logout page.
+ */
+
+import { useEffect } from "react";
+import api from "global/axios.config";
+import { useHistory } from "react-router-dom";
 
 
 const Logout = () =>  {
   const history = useHistory();
 
   useEffect(() => {
-    api.post("/users/logout", {
+    api.post("/users/logout/", {
       refresh_token: localStorage.getItem("refresh_token"),
     }).then(response => {
       console.log(response);
@@ -17,7 +21,7 @@ const Logout = () =>  {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     api.defaults.headers["Authorization"] = null;
-    history.push("/login");
+    history.push("/auth/login");
   });
 
   return (

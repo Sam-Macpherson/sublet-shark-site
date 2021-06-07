@@ -16,9 +16,11 @@ import {
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Link, useHistory } from 'react-router-dom';
+import LockText from "fields/lock-text-field";
+import api from "global/axios.config";
+
 import { useStyles } from "./style";
-import LockText from "../lock-text";
-import api from "../../global/axios.config";
+
 
 interface FormData {
   email: string;
@@ -122,12 +124,12 @@ function LoginForm() {
           </Button>
           <Grid container justify="space-between" direction="row">
             <Grid item>
-              <MUILink variant="body2" component={Link} to="/recover-account">
+              <MUILink variant="body2" component={Link} to="/auth/recover-account">
                 Forgot password?
               </MUILink>
             </Grid>
             <Grid item>
-              <MUILink variant="body2" component={Link} to="/register">
+              <MUILink variant="body2" component={Link} to="/auth/register">
                 Don't have an account? Sign up
               </MUILink>
             </Grid>

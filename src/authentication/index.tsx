@@ -1,17 +1,15 @@
-/**
- * The Recover Password page.
- */
-
+import { ReactElement } from "react";
 import { Grid } from "@material-ui/core";
-import { About, RecoverPasswordForm } from '../../components';
+import About from "about";
+
 import { useStyles } from "./style";
 
 
-function RecoverPasswordPage() {
+const Authentication = (props: any): ReactElement => {
   const classes = useStyles();
 
   return (
-    <Grid 
+    <Grid
       container
       alignItems="center"
       style={{ minHeight: "100%" }}
@@ -23,12 +21,12 @@ function RecoverPasswordPage() {
       </Grid>
       <Grid item xs={12} sm={12} md={6} lg={4}>
         <div className={classes.gridItem}>
-          <RecoverPasswordForm />
+          {props.children}
         </div>
       </Grid>
     </Grid>
+
   );
-}
+};
 
-
-export default RecoverPasswordPage;
+export default Authentication;

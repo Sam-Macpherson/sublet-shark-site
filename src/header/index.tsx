@@ -1,11 +1,25 @@
-import {AppBar, Avatar, Badge, IconButton, Toolbar, Typography} from "@material-ui/core";
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import NotificationsIcon from "@material-ui/icons/Notifications"
-import { useStyles } from "./style";
-import React, {useState} from "react";
+/**
+ * The header at the top of the app with profile picture, notifications, etc.
+ */
+
+import {
+  Menu,
+  Badge,
+  AppBar,
+  Avatar,
+  Toolbar,
+  MenuItem,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
+import {
+  Menu as MenuIcon,
+  Notifications as NotificationsIcon
+} from '@material-ui/icons';
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+
+import { useStyles } from "./style";
 
 
 function Header() {
@@ -23,7 +37,7 @@ function Header() {
   };
 
   const logout = () => {
-    history.push("/logout");
+    history.push("/auth/logout");
   }
 
   return (

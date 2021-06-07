@@ -21,10 +21,10 @@ import {
 import { Autocomplete } from "@material-ui/lab";
 import { Link, useHistory } from 'react-router-dom';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import axios from "axios";
-import LockText from "../lock-text";
+import LockText from "fields/lock-text-field";
+import api from "global/axios.config";
+
 import { useStyles } from "./style";
-import api from "../../global/axios.config";
 
 
 interface Institution {
@@ -75,13 +75,8 @@ function RegisterForm() {
   }
 
   useEffect(() => {
-    axios.get(
-      '/institutions/institutions/', 
-      {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        }
-      }
+    api.get(
+      '/institutions/institutions/'
     ).then(response => {
       setInstitutions(response.data);
     }).catch(errors => {
@@ -240,7 +235,7 @@ function RegisterForm() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <MUILink variant="body2" component={Link} to="/login">
+              <MUILink variant="body2" component={Link} to="/auth/login">
                 Already have an account? Log in
               </MUILink>
             </Grid>

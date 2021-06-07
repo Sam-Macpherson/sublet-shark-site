@@ -12,7 +12,8 @@ import {
   Link as MUILink
 } from "@material-ui/core";
 import { Link } from 'react-router-dom';
-import LockText from '../lock-text';
+import LockText from 'fields/lock-text-field';
+
 import { useStyles } from "./style";
 
 
@@ -51,14 +52,14 @@ function RecoverPasswordForm() {
           </Button>
           <Grid container justify="flex-start" direction="row">
             <Grid item>
-              <MUILink variant="body2" component={Link} to="/login">
+              <MUILink variant="body2" component={Link} to="/auth/login">
                 Cancel
               </MUILink>
             </Grid>
           </Grid>
         </form>}
         {emailSent && <Typography variant="h5">Recovery email sent</Typography>}
-        {emailSent && <MUILink variant="body2" component={Link} to="/login">Back to login</MUILink>}
+        {emailSent && <MUILink variant="body2" component={Link} to="/auth/login">Back to login</MUILink>}
       </div>
     </Paper>
   );

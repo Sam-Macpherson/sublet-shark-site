@@ -3,12 +3,11 @@
  */
 
 import React from "react"
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
-import { List } from "@material-ui/core";
-import { useStyles } from "./style";
-import BulletPoint from "../bullet-point";
+import { List, Grid, Typography } from "@material-ui/core";
 
+import BulletPoint from "fields/bullet-point-field";
+
+import { useStyles } from "./style";
 
 function About() {
   const classes = useStyles();

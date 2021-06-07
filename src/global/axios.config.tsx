@@ -31,7 +31,7 @@ api.interceptors.response.use(
       }
 
       if (error.response.status === 401 && originalRequest.url === baseURL + '/users/refresh/') {
-          window.location.href = '/login/';
+          window.location.href = '/auth/login/';
           return Promise.reject(error);
       }
       console.log(error.response.data.detail, error.response.status, error.response.statusText);
@@ -65,11 +65,11 @@ api.interceptors.response.use(
                     });
               } else {
                   console.log('Refresh token is expired', tokenParts.exp, now);
-                  window.location.href = '/login/';
+                  window.location.href = '/auth/login/';
               }
           } else {
               console.log('Refresh token not available.');
-              window.location.href = '/login/';
+              window.location.href = '/auth/login/';
           }
       }
 
