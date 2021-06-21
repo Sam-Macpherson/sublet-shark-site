@@ -149,7 +149,7 @@ const RegisterForm = () => {
               <Autocomplete
                 options={formData.institution ? formData.institution?.domains : []}
                 getOptionLabel={(domain: string) => domain}
-                noOptionsText="Select an institution to see available domains."
+                noOptionsText={formData.institution ? "No options" : "Select an institution to see available domains"}
                 value={formData.domain}
                 onChange={(event, value) => handleChangeSelect(event, value, "domain")}
                 renderInput={(params) =>
@@ -194,7 +194,8 @@ const RegisterForm = () => {
                         checked={formData.allowAdditionalEmails}
                         onChange={handleChange}
                         name="allowAdditionalEmails"
-                        color="primary" />
+                        color="primary"
+                    />
                   }
                   label="I want to receive email updates and promotions."
               />
