@@ -1,6 +1,7 @@
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { useStyles } from "./style";
 import { FC } from "react";
+import { ACCOMMODATION_TYPES } from "global/constants";
 
 interface ListingCardProps {
   listing: Listing;
@@ -20,7 +21,7 @@ const ListingCard: FC<ListingCardProps> = ({ listing }) => {
       <CardContent className={classes.cardContent}>
         <Typography noWrap variant="subtitle1">{listing.address}</Typography>
         <Typography variant="subtitle2">
-          {listing.accommodation_type}
+          {ACCOMMODATION_TYPES[listing.accommodation_type]}
         </Typography>
       </CardContent>
     </Card>
