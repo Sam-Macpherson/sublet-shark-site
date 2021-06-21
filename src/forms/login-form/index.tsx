@@ -4,8 +4,7 @@
 import React, { useState } from "react";
 import { 
   Grid, 
-  Paper, 
-  Button, 
+  Paper,
   TextField,
   IconButton, 
   InputLabel, 
@@ -17,6 +16,7 @@ import {
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Link, useHistory } from 'react-router-dom';
 import LockText from "fields/lock-text-field";
+import LoadingButton from "fields/loading-button";
 import API from "api";
 
 import { useStyles } from "./style";
@@ -30,6 +30,7 @@ interface LoginFormData {
 const LoginForm = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [submittingLogin, setSubmittingLogin] = useState<boolean>(false);
   const initialFormData: LoginFormData = Object.freeze({
     email: "",
     password: "",
@@ -46,10 +47,14 @@ const LoginForm = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    setSubmittingLogin(true);
     API.login({
       username: formData.email,
       password: formData.password,
-    }).then(() => history.push("/listings"));
+    }).then(response => {
+      setSubmittingLogin(false);
+      history.push("/listings");
+    }).catch(() => setSubmittingLogin(false));
   };
   
   return(
@@ -99,16 +104,17 @@ const LoginForm = () => {
               </FormControl>
             </Grid>
           </Grid>
-          <Button
+          <LoadingButton
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
             onClick={handleSubmit}
+            loading={submittingLogin}
           >
             Log in
-          </Button>
+          </LoadingButton>
           <Grid container justify="space-between" direction="row">
             <Grid item>
               <MUILink variant="body2" component={Link} to="/auth/recover-account">

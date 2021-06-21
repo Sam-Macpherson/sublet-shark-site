@@ -22,6 +22,7 @@ const login = (params: Object) =>
       `Bearer ${localStorage.getItem("access_token")}`;
   }).catch(error => {
     console.log("Error logging in: ", error);
+    return Promise.reject(error);
   });
 
 const logout = () =>

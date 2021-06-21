@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import {
   Grid,
   Paper,
-  Button,
   Checkbox,
   TextField,
   IconButton,
@@ -19,12 +18,13 @@ import {
   FormControlLabel,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import LockText from "fields/lock-text-field";
 import API from "api";
 
 import { useStyles } from "./style";
+import LoadingButton from "fields/loading-button";
 
 
 interface RegisterFormData {
@@ -39,7 +39,8 @@ interface RegisterFormData {
 
 const RegisterForm = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const [submittingRegister, setSubmittingRegister] = useState<boolean>(false);
+  const [emailSent, setEmailSent] = useState<boolean>(false);
   const initialFormData: RegisterFormData = Object.freeze({
     institution: null,
     domain: "",
@@ -74,8 +75,9 @@ const RegisterForm = () => {
     })
   }, []);
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    setSubmittingRegister(true);
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     API.register({
@@ -84,18 +86,16 @@ const RegisterForm = () => {
       first_name: formData.firstName,
       last_name: formData.lastName,
     }).then(() => {
-      API.login({
-        username: formData.email + "@" + formData.domain,
-        password: formData.password
-      }).then(() => history.push("/listings"));
-    });
+      setSubmittingRegister(false);
+      setEmailSent(true);
+    }).catch(() => setSubmittingRegister(false));
   }
 
   return (
     <Paper elevation={5}>
       <div className={classes.paper}>
-        <LockText text="Sign up" />
-        <form className={classes.form} noValidate>
+        {!emailSent && <LockText text="Sign up" />}
+        {!emailSent && <form className={classes.form} noValidate>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12}>
                 <Autocomplete
@@ -200,16 +200,16 @@ const RegisterForm = () => {
               />
             </Grid>
           </Grid>
-          <Button
+          <LoadingButton
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
             onClick={handleSubmit}
+            loading={submittingRegister}
           >
             Sign up
-          </Button>
+          </LoadingButton>
           <Grid container justify="flex-end">
             <Grid item>
               <MUILink variant="body2" component={Link} to="/auth/login">
@@ -217,7 +217,10 @@ const RegisterForm = () => {
               </MUILink>
             </Grid>
           </Grid>
-        </form>
+        </form>}
+        {emailSent && <Typography variant="h5">Check your email</Typography>}
+        {emailSent && <Typography variant="body2">We've sent you an email with a link to activate your account</Typography>}
+        {emailSent && <MUILink variant="body2" component={Link} to="/auth/login">Back to login</MUILink>}
       </div>
     </Paper>
   );
