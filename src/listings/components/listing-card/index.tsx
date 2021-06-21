@@ -1,12 +1,13 @@
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
-import {useStyles} from "./style";
+import { useStyles } from "./style";
+import { FC } from "react";
 
 interface ListingCardProps {
-  listing: Listing,
+  listing: Listing;
 }
 
 
-const ListingCard = ({ listing }: ListingCardProps) => {
+const ListingCard: FC<ListingCardProps> = ({ listing }) => {
   const classes = useStyles();
 
   return (

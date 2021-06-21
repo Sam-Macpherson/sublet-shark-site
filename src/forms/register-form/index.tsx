@@ -76,6 +76,8 @@ const RegisterForm = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
     API.register({
       email: formData.email + "@" + formData.domain,
       password: formData.password,

@@ -26,17 +26,15 @@ const ListingsPage = () => {
 
   return (
     <div className={classes.background}>
+      <Header />
       {isLoading ? (<Typography variant="body1">Loading...</Typography>) : (
-        <React.Fragment>
-          <Header />
           <Grid container spacing={4} className={classes.listingsContainerGrid}>
             {_.map(listings, listing => (
-              <Grid item xs={12} sm={6} md={4} lg={3}>
+              <Grid key={listing.id} item xs={12} sm={6} md={4} lg={3}>
                 <ListingCard listing={listing}/>
               </Grid>
             ))}
-          </Grid>
-        </React.Fragment>)}
+          </Grid>)}
     </div>
   );
 }

@@ -9,6 +9,7 @@ const AUTH_API_URLS = {
   LOGOUT: "/users/logout/",
   REGISTER: "/users/register/",
   RECOVER_PASSWORD: "/users/recover-password/",
+  ACTIVATE_ACCOUNT: "/users/activate/"
 };
 
 const login = (params: Object) =>
@@ -44,6 +45,15 @@ const register = (params: Object) =>
     console.log("Error registering: ", error);
     return Promise.reject(error);
   });
+
+const activateAccount = (params: ActivateAccountParamTypes) =>
+  axiosAPI.patch(AUTH_API_URLS.ACTIVATE_ACCOUNT + params.uidBase64 + '/' + params.token, {
+  }).then(activateResponse => {
+    // Do nothing?
+  }).catch(error => {
+    console.log("Error activating: ", error);
+    return Promise.reject(error);
+  })
 
 const recoverPassword = (params: Object) => null; // TODO
 
@@ -87,6 +97,7 @@ const API = {
   login: login,
   logout: logout,
   register: register,
+  activateAccount: activateAccount,
   recoverPassword: recoverPassword,
   // Institutions.
   fetchInstitutions: fetchInstitutions,

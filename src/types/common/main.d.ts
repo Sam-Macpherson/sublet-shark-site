@@ -4,6 +4,14 @@
 */
 
 /**
+ * Authentication.
+ */
+interface ActivateAccountParamTypes {
+  uidBase64: string;
+  token: string;
+}
+
+/**
  * Institutions.
  */
 interface Institution {
@@ -16,14 +24,15 @@ interface Institution {
  * Listings.
  */
 interface ListingImage {
-  image_url: string
+  image_url: string;
 }
 
 interface Listing {
-  accommodation_type: number,
-  additional_info: string,
-  address: string,
-  start_date: string,
-  end_date: string,
-  images: ListingImage[],
+  id: string;
+  accommodation_type: number;
+  additional_info: string;
+  address: string;
+  start_date: string;
+  end_date: string;
+  images: ListingImage[];
 }

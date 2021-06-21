@@ -1,11 +1,11 @@
-import { ReactElement } from "react";
+import { FC } from "react";
 import { Grid } from "@material-ui/core";
 import About from "about";
 
 import { useStyles } from "./style";
 
 
-const Authentication = (props: any): ReactElement => {
+const Authentication: FC = (props) => {
   const classes = useStyles();
 
   return (

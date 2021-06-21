@@ -4,7 +4,7 @@ const baseURL = process.env.REACT_APP_API_URL_BASE;
 
 const api = _axios.create({
     baseURL: baseURL,
-    timeout: 5000,
+    timeout: 8000,
     headers: {
         "Authorization": localStorage.getItem("access_token") !== null
             ? "Bearer " + localStorage.getItem("access_token")
@@ -35,7 +35,8 @@ api.interceptors.response.use(
           return Promise.reject(error);
       }
       console.log(error.response.data.detail, error.response.status, error.response.statusText);
-      if (error.response.data.detail === 'Authentication credentials were not provided.'
+      if ((error.response.data.detail === 'Authentication credentials were not provided.'
+        || error.response.data.detail === 'Given token not valid for any token type')
         && error.response.status === 401
         && error.response.statusText === 'Unauthorized') {
           const refreshToken = localStorage.getItem('refresh_token');

@@ -15,7 +15,7 @@ interface BulletPointProps {
 }
 
 
-const BulletPoint = ({ checkMark, text }: BulletPointProps) => {
+const BulletPoint: React.FC<BulletPointProps> = ({ checkMark, text }) => {
   const classes = useStyles();
 
   return (
