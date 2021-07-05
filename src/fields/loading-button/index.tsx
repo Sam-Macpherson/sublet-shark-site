@@ -15,6 +15,7 @@ const LoadingButton: FC<LoadingButtonProps> = ({loading, ...props}) => {
         {...props}
         className={classes.button}
         disabled={loading}
+        variant="contained"
       >
         {props.children}
       </Button>

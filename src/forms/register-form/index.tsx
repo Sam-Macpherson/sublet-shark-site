@@ -34,7 +34,6 @@ interface RegisterFormData {
   password: string;
   firstName: string;
   lastName: string;
-  allowAdditionalEmails: boolean;
 }
 
 const RegisterForm = () => {
@@ -48,8 +47,8 @@ const RegisterForm = () => {
     password: "",
     firstName: "",
     lastName: "",
-    allowAdditionalEmails: true,
   });
+  const [allowEmails, setAllowEmails] = useState<boolean>(true);
 
   const [institutions, setInstitutions] = useState<Institution[]>([]);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -58,7 +57,7 @@ const RegisterForm = () => {
   const handleChange = (event: any) => {
     updateFormData({
       ...formData,
-      [event.target.name]: "value" in event.target ? event.target.value : event.target.checked,
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -190,8 +189,8 @@ const RegisterForm = () => {
               <FormControlLabel
                   control={
                     <Checkbox
-                        checked={formData.allowAdditionalEmails}
-                        onChange={handleChange}
+                        checked={allowEmails}
+                        onChange={() => setAllowEmails(!allowEmails)}
                         name="allowAdditionalEmails"
                         color="primary"
                     />
