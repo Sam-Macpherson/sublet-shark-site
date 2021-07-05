@@ -8,13 +8,13 @@ const AUTH_API_URLS = {
   LOGIN: "/users/login/",
   LOGOUT: "/users/logout/",
   REGISTER: "/users/register/",
-  RECOVER_PASSWORD: "/users/recover-password/",
+  RESET_PASSWORD: "/users/reset-password/",
   ACTIVATE_ACCOUNT: "/users/activate/"
 };
 
-const login = (params: Object) =>
+const login = (data: Object) =>
   axiosAPI.post(AUTH_API_URLS.LOGIN, {
-    ...params,
+    ...data,
   }).then(loginResponse => {
     localStorage.setItem("access_token", loginResponse.data.access);
     localStorage.setItem("refresh_token", loginResponse.data.refresh);
@@ -37,9 +37,9 @@ const logout = () =>
     return Promise.reject(error);
   });
 
-const register = (params: Object) =>
+const register = (data: Object) =>
   axiosAPI.post(AUTH_API_URLS.REGISTER, {
-    ...params,
+    ...data,
   }).then(registerResponse => {
     // Do nothing?
   }).catch(error => {
@@ -48,15 +48,33 @@ const register = (params: Object) =>
   });
 
 const activateAccount = (params: ActivateAccountParamTypes) =>
-  axiosAPI.patch(AUTH_API_URLS.ACTIVATE_ACCOUNT + params.uidBase64 + '/' + params.token, {
+  axiosAPI.patch(`${AUTH_API_URLS.ACTIVATE_ACCOUNT}${params.uidBase64}/${params.token}`, {
   }).then(activateResponse => {
     // Do nothing?
   }).catch(error => {
     console.log("Error activating: ", error);
     return Promise.reject(error);
-  })
+  });
 
-const recoverPassword = (params: Object) => null; // TODO
+const requestPasswordResetEmail = (data: Object) =>
+  axiosAPI.post(
+    `${AUTH_API_URLS.RESET_PASSWORD}`, {...data},
+  ).then(requestPasswordResetEmailResponse => {
+    // Do nothing?
+  }).catch(error => {
+    console.log("Error requesting password reset email: ", error);
+    return Promise.reject(error);
+  });
+
+const resetPassword = (params: ResetPasswordAccountParamTypes, data: Object) =>
+  axiosAPI.patch(`${AUTH_API_URLS.RESET_PASSWORD}${params.uidBase64}/${params.token}`, {
+    ...data,
+  }).then(resetPasswordResponse => {
+    // Do nothing?
+  }).catch(error => {
+    console.log("Error resetting password: ", error);
+    return Promise.reject(error);
+  });
 
 
 /**
@@ -99,7 +117,8 @@ const API = {
   logout: logout,
   register: register,
   activateAccount: activateAccount,
-  recoverPassword: recoverPassword,
+  requestPasswordResetEmail: requestPasswordResetEmail,
+  resetPassword: resetPassword,
   // Institutions.
   fetchInstitutions: fetchInstitutions,
   // Listings.

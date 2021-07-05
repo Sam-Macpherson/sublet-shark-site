@@ -89,7 +89,7 @@ const RegisterForm = () => {
       setSubmittingRegister(false);
       setEmailSent(true);
     }).catch(() => setSubmittingRegister(false));
-  }
+  };
 
   return (
     <Paper elevation={5}>
@@ -177,7 +177,6 @@ const RegisterForm = () => {
                       <IconButton
                         aria-label="toggle password visibility"
                         onClick={() => setShowPassword(!showPassword)}
-                        onMouseDown={() => {}}
                         edge="end"
                       >
                         {showPassword ? <Visibility /> : <VisibilityOff />}

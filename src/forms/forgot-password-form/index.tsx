@@ -5,22 +5,36 @@
 import React, { useState } from "react";
 import { 
   Grid, 
-  Paper, 
-  Button, 
+  Paper,
   TextField, 
   Typography,
   Link as MUILink
 } from "@material-ui/core";
 import { Link } from 'react-router-dom';
 import LockText from 'fields/lock-text-field';
+import LoadingButton from "fields/loading-button";
 
 import { useStyles } from "./style";
 
+import API from "api";
 
-const RecoverPasswordForm = () => {
+
+const ForgotPasswordForm = () => {
   const classes = useStyles();
+  const [sendingEmail, setSendingEmail] = useState<boolean>(false);
   const [emailSent, setEmailSent] = useState<boolean>(false);
-  
+  const [email, setEmail] = useState<string | null>(null);
+
+  const handleChange = (event: any) => setEmail(event.target.value);
+
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setSendingEmail(true);
+    API.requestPasswordResetEmail({email}).then(() => {
+      setEmailSent(true);
+    }).catch(() => setSendingEmail(false));
+  };
+
   return(
     <Paper elevation={5}>
       <div className={classes.paper}>
@@ -36,20 +50,22 @@ const RecoverPasswordForm = () => {
                 id="email"
                 label="Email Address"
                 name="email"
+                onChange={handleChange}
                 autoComplete="email"
               />
             </Grid>
           </Grid>
-          <Button
+          <LoadingButton
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            onClick={() => setEmailSent(true)}
+            onClick={handleSubmit}
             className={classes.submit}
+            loading={sendingEmail}
           >
             Send recovery email
-          </Button>
+          </LoadingButton>
           <Grid container justify="flex-start" direction="row">
             <Grid item>
               <MUILink variant="body2" component={Link} to="/auth/login">
@@ -66,4 +82,4 @@ const RecoverPasswordForm = () => {
 };
 
 
-export default RecoverPasswordForm;
+export default ForgotPasswordForm;

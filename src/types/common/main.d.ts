@@ -11,6 +11,11 @@ interface ActivateAccountParamTypes {
   token: string;
 }
 
+interface ResetPasswordAccountParamTypes {
+  uidBase64: string;
+  token: string;
+}
+
 /**
  * Institutions.
  */

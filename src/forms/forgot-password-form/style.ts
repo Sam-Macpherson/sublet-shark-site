@@ -1,5 +1,5 @@
 /**
- * The styles for the RecoverPasswordForm component.
+ * The styles for the ForgotPasswordForm component.
  */
 
 import { makeStyles } from "@material-ui/core/styles";

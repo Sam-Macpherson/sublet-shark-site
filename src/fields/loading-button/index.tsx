@@ -6,7 +6,7 @@ interface LoadingButtonProps extends ButtonProps {
   loading: boolean;
 }
 
-const LoadingButton: FC<LoadingButtonProps> = (props) => {
+const LoadingButton: FC<LoadingButtonProps> = ({loading, ...props}) => {
   const classes = useStyles();
 
   return (
@@ -14,11 +14,11 @@ const LoadingButton: FC<LoadingButtonProps> = (props) => {
       <Button
         {...props}
         className={classes.button}
-        disabled={props.loading}
+        disabled={loading}
       >
         {props.children}
       </Button>
-      {props.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+      {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
     </div>
   );
 };
