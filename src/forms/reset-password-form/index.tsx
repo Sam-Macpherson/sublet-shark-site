@@ -2,7 +2,8 @@
  * The form component for recovering your password.
  */
 
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
+import _ from "lodash";
 import {
   Paper,
   Link as MUILink, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Grid
@@ -31,6 +32,7 @@ const ResetPasswordForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showPassword2, setShowPassword2] = useState<boolean>(false);
   const [submittingNewPassword, setSubmittingNewPassword] = useState<boolean>(false);
+  const [tokenExpired, setTokenExpired] = useState<boolean>(false);
   const [passwordReset, setPasswordReset] = useState<boolean>(false);
 
   const handleChange = (event: any) => {
@@ -45,19 +47,37 @@ const ResetPasswordForm = () => {
     API.resetPassword(params, formData).then(() => {
       setPasswordReset(true);
       setSubmittingNewPassword(false);
-    }).catch(() => {
+    }).catch((error) => {
+      if (_.includes(error.response.data.detail, 'token is either invalid or has expired')) {
+        setTokenExpired(true);
+      }
       setSubmittingNewPassword(false);
     })
   };
+
+  useEffect(() => {
+    if (!passwordReset) {
+      API.passwordResetLinkExpired(params).catch(error => {
+        setTokenExpired(true);
+      });
+    }
+  }, [params, passwordReset]);
+
+  let headerText = "Reset your password";
+  if (tokenExpired) {
+    headerText = "Password reset link is invalid";
+  } else if (passwordReset) {
+    headerText = "Password successfully reset";
+  }
 
   return (
     <Paper elevation={5}>
       <div className={classes.paper}>
         <LockText
-          text={passwordReset ? "Password successfully reset" : "Reset your password"}
+          text={headerText}
           unlocked={passwordReset}
         />
-        {!passwordReset && <form className={classes.form} noValidate>
+        {!tokenExpired && !passwordReset && <form className={classes.form} noValidate>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12}>
               <FormControl variant="outlined" fullWidth required>
@@ -122,6 +142,7 @@ const ResetPasswordForm = () => {
           </LoadingButton>
         </form>}
         {passwordReset && <MUILink variant="body2" component={Link} to="/auth/login">Back to login</MUILink>}
+        {tokenExpired && <MUILink variant="body2" component={Link} to="/auth/recover-account">Request another link</MUILink>}
       </div>
     </Paper>
   );

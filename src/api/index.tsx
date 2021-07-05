@@ -76,6 +76,15 @@ const resetPassword = (params: ResetPasswordAccountParamTypes, data: Object) =>
     return Promise.reject(error);
   });
 
+const passwordResetLinkExpired = (params: ResetPasswordAccountParamTypes) =>
+  axiosAPI.get(`${AUTH_API_URLS.RESET_PASSWORD}${params.uidBase64}/${params.token}`, {
+  }).then(passwordResetLinkExpiredResponse => {
+    // Do nothing?
+  }).catch(error => {
+    console.log("Password link is invalid or expired: ", error);
+    return Promise.reject(error);
+  });
+
 
 /**
  * Institutions.
@@ -119,6 +128,7 @@ const API = {
   activateAccount: activateAccount,
   requestPasswordResetEmail: requestPasswordResetEmail,
   resetPassword: resetPassword,
+  passwordResetLinkExpired: passwordResetLinkExpired,
   // Institutions.
   fetchInstitutions: fetchInstitutions,
   // Listings.
