@@ -10,7 +10,6 @@ import API from "api";
 import _ from "lodash";
 
 import { useStyles } from "./style";
-import FilterPanel from "./components/filter-panel";
 
 
 const ListingsPage: FC = () => {
@@ -27,22 +26,15 @@ const ListingsPage: FC = () => {
 
   return (
     <div className={classes.background}>
-      <Header />
+      <Header text="Find a sublet"/>
       {isLoading ? (<Typography variant="body1">Loading...</Typography>) : (
-        <Grid container direction="row" className={classes.fullHeight}>
-          <Grid item className={classes.filterPanel} xs={2}>
-            <FilterPanel />
+          <Grid container spacing={4} className={classes.listingsContainerGrid}>
+            {_.map(listings, listing => (
+              <Grid key={listing.id} item xs={12} sm={6} md={4} lg={3}>
+                <ListingCard listing={listing}/>
+              </Grid>
+            ))}
           </Grid>
-          <Grid item xs={10}>
-            <Grid container spacing={4} className={classes.listingsContainerGrid}>
-              {_.map(listings, listing => (
-                <Grid key={listing.id} item xs={12} sm={6} md={4} lg={3}>
-                  <ListingCard listing={listing}/>
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
         )}
     </div>
   );

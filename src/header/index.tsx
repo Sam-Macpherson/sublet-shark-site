@@ -16,13 +16,16 @@ import {
   Menu as MenuIcon,
   Notifications as NotificationsIcon
 } from '@material-ui/icons';
-import React, { useState } from "react";
+import React, {FC, useState} from "react";
 import { useHistory } from "react-router-dom";
 
 import { useStyles } from "./style";
 
+interface HeaderProps {
+  text: string;
+}
 
-const Header = () => {
+const Header: FC<HeaderProps> = ({ text }) => {
   const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -47,7 +50,7 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
         <Typography className={classes.title} variant="h6">
-          Sublets
+          {text}
         </Typography>
         <div className={classes.icons}>
           <IconButton color="inherit">

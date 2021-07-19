@@ -9,7 +9,9 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.paper,
   },
   listingsContainerGrid: {
-    padding: theme.spacing(4),
+    padding: theme.spacing(2),
+    margin: theme.spacing(0),
+    width: "100%",
   },
   background: {
     width: "100%",
