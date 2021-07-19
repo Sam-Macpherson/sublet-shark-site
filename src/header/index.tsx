@@ -13,7 +13,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import {
-  Menu as MenuIcon,
   Notifications as NotificationsIcon
 } from '@material-ui/icons';
 import React, {FC, useState} from "react";
@@ -46,9 +45,6 @@ const Header: FC<HeaderProps> = ({ text }) => {
   return (
     <AppBar position="static" className={classes.appbar}>
       <Toolbar>
-        <IconButton edge="start" className={classes.menuButton} color="inherit">
-          <MenuIcon />
-        </IconButton>
         <Typography className={classes.title} variant="h6">
           {text}
         </Typography>
