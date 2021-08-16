@@ -11,16 +11,18 @@ import ResetPasswordForm from "../forms/reset-password-form";
 
 const AuthenticationRoutes = (): ReactElement => {
   return (
-    <Authentication>
-      <Switch>
-        <Route path="/auth/recover-account" component={ForgotPasswordForm}/>
-        <Route path="/auth/login" component={LoginForm}/>
-        <Route path="/auth/logout" component={Logout} />
-        <Route path="/auth/register" component={RegisterForm}/>
-        <Route path="/auth/activate/:uidBase64/:token" component={ActivateForm}/>
-        <Route path="/auth/reset-password/:uidBase64/:token" component={ResetPasswordForm} />
-      </Switch>
-    </Authentication>
+    <div style={{background: "white", height: "100vh"}}>
+      <Authentication>
+        <Switch>
+          <Route path="/auth/recover-account" component={ForgotPasswordForm}/>
+          <Route path="/auth/login" component={LoginForm}/>
+          <Route path="/auth/logout" component={Logout} />
+          <Route path="/auth/register" component={RegisterForm}/>
+          <Route path="/auth/activate/:uidBase64/:token" component={ActivateForm}/>
+          <Route path="/auth/reset-password/:uidBase64/:token" component={ResetPasswordForm} />
+        </Switch>
+      </Authentication>
+    </div>
   );
 };
 
