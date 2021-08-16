@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     display: "block",
+    paddingLeft: theme.spacing(2),
   },
   appbar: {
     display: "block",

@@ -5,12 +5,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
+    background: theme.palette.primary.light,
     height: "100vh",
-    display: "flex",
   },
-});
-
+}));
 
 export { useStyles };

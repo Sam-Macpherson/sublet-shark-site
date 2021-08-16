@@ -8,9 +8,6 @@ const useStyles = makeStyles(theme => ({
   display: {
     display: "flex",
   },
-  mainContent: {
-    marginLeft: 160,
-  },
 }));
 
 const SiteRoutes = () => {
@@ -19,12 +16,10 @@ const SiteRoutes = () => {
   return (
     <article className={classes.display}>
       <NavigationBar />
-      <div className={classes.mainContent}>
-        <Switch>
-          <Route path="/profile/" component={ProfilePage} />
-          <Route path="/" component={ListingsRoutes} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route path="/profile/" component={ProfilePage} />
+        <Route path="/" component={ListingsRoutes} />
+      </Switch>
     </article>
   );
 }

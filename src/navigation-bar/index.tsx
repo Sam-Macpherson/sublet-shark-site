@@ -6,34 +6,38 @@ import {
   Drawer, ListItem, List, Divider, ListItemIcon, ListItemText,
 } from "@material-ui/core";
 import {
-  Inbox as InboxIcon,
-  Mail as MailIcon,
+  AccountCircle as AccountCircleIcon,
+  House as HouseIcon,
 } from '@material-ui/icons';
-import React, { FC } from "react";
-import {useStyles} from "./style";
+import React, { FC, useCallback } from "react";
+import { useStyles } from "./style";
+import { useHistory } from "react-router-dom";
 
 
 const NavigationBar: FC = () => {
   const classes = useStyles();
+  const history = useHistory();
 
-  const drawerOptions = () => (
-    // TODO make real options
-    <List>
-      {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
+  const drawerOptions = useCallback(() => (
+    <List className={classes.drawer}>
+      <ListItem button onClick={() => history.push("/profile")} key="Profile">
+        <ListItemIcon><AccountCircleIcon /></ListItemIcon>
+        <ListItemText primary="Profile" />
+      </ListItem>
+      <ListItem button onClick={() => history.push("/listings")} key="Find a sublet">
+        <ListItemIcon><HouseIcon /></ListItemIcon>
+        <ListItemText primary="Find a sublet" />
+      </ListItem>
     </List>
-  );
+  ), [history, classes]);
 
   return (
-    <div className={classes.fullHeight}>
+    <div className={classes.drawer}>
       <Drawer
+        className={classes.drawer}
         variant="persistent"
         anchor="left"
-        open={true}
+        open
       >
         {/* TODO Add a profile card here */}
         <Divider />
