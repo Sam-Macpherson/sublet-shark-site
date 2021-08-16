@@ -49,7 +49,7 @@ const LoginForm = () => {
     event.preventDefault();
     setSubmittingLogin(true);
     API.login({
-      username: formData.email,
+      email: formData.email,
       password: formData.password,
     }).then(response => {
       setSubmittingLogin(false);
