@@ -11,6 +11,22 @@ interface ActivateAccountParamTypes {
   token: string;
 }
 
+/**
+ * Users.
+ */
+interface UserProfileParams {
+  id: string;
+}
+
+interface User {
+  id: string;
+  first_name: string;
+  last_name: string;
+  sublet_status: number;
+  bio: string;
+  profile_picture: string;
+}
+
 interface ResetPasswordAccountParamTypes {
   uidBase64: string;
   token: string;

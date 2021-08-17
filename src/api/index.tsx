@@ -85,6 +85,20 @@ const passwordResetLinkExpired = (params: ResetPasswordAccountParamTypes) =>
     return Promise.reject(error);
   });
 
+/**
+ * Users.
+ */
+const USERS_API_URLS = {
+  FETCH: (userId: string) => `/users/${userId}/profile/`,
+}
+
+const fetchUserProfile = (userId: string) =>
+  axiosAPI.get<User>(USERS_API_URLS.FETCH(userId)).then(
+    response => Promise.resolve(response.data)
+  ).catch(error => {
+    console.log(`Error fetching user profile for user ${userId}: `, error);
+    return Promise.reject(error)
+  });
 
 /**
  * Institutions.
@@ -129,6 +143,8 @@ const API = {
   requestPasswordResetEmail: requestPasswordResetEmail,
   resetPassword: resetPassword,
   passwordResetLinkExpired: passwordResetLinkExpired,
+  // Users.
+  fetchUserProfile: fetchUserProfile,
   // Institutions.
   fetchInstitutions: fetchInstitutions,
   // Listings.

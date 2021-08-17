@@ -20,7 +20,7 @@ const NavigationBar: FC = () => {
 
   const drawerOptions = useCallback(() => (
     <List className={classes.drawer}>
-      <ListItem button onClick={() => history.push("/profile")} key="Profile">
+      <ListItem button onClick={() => history.push("/users/me/profile")} key="Profile">
         <ListItemIcon><AccountCircleIcon /></ListItemIcon>
         <ListItemText primary="Profile" />
       </ListItem>

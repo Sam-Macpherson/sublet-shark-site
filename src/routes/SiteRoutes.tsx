@@ -17,7 +17,7 @@ const SiteRoutes = () => {
     <article className={classes.display}>
       <NavigationBar />
       <Switch>
-        <Route path="/profile/" component={ProfilePage} />
+        <Route path="/users/:id/profile/" component={ProfilePage} />
         <Route path="/" component={ListingsRoutes} />
       </Switch>
     </article>
